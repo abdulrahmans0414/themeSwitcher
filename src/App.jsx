@@ -1,13 +1,48 @@
+import { useEffect, useState } from "react"
+import { ThemeProvider } from "./context/Theme"
+import ThemeBtn from "./components/ThemeBtn"
+import Card from "./components/Card"
 
 function App() {
+  const [themeMode, setThemeMode] = useState('light')
+
+  const lightTheme = () => {
+    setThemeMode('light')
+  }
+  const darkTheme = () => {
+    setThemeMode('dark')
+  }
+
+  // actual change in theme
+  useEffect(() => {
+    document.querySelector('html').classList.remove('light', 'dark')
+    document.querySelector('html').classList.add(themeMode)
+  }, [themeMode])
+
 
   return (
-    <>
-      <h1 className="text-3xl font-bold underline">
-        Hi, Abdul Rahman
-      </h1>
 
-    </>
+    < ThemeProvider value={themeMode, lightTheme, darkTheme}>
+      <div className="flex flex-wrap min-h-screen items-center">
+        <div className="w-full">
+
+          <div className="bg-sky-300 w-full max-w-sm mx-auto flex justify-end  mb-4">
+            {/* theme btn */}
+            <ThemeBtn />
+
+          </div>
+
+
+          <div className="bg-sky-900 w-full max-w-sm mx-auto">
+            {/* card  */}
+            <Card />
+
+          </div>
+
+
+        </div>
+      </div>
+    </ThemeProvider>
   )
 }
 
